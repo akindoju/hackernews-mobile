@@ -15,25 +15,22 @@ const fetchStoryItemsFail = (message) => ({
   payload: message,
 });
 
-const setActivePageIds = (page) => ({
+export const setActivePageIds = (page) => ({
   type: storyItemTypes.SET_ACTIVE_PAGE_IDS,
   payload: page,
 });
 
-export const fetchStoryItems = () => {
-  return async (dispatch) => {
+export const fetchStoryItems = (page = 1) => {
+  return async (dispatch, getState) => {
     dispatch(fetchStoryItemsStart());
     try {
       const { data } = await axios.get(
         "https://hacker-news.firebaseio.com/v0/newstories.json?print=pretty"
       );
       dispatch(fetchStoryItemsSuccess(data));
+      dispatch(setActivePageIds(page));
     } catch (error) {
       dispatch(fetchStoryItemsFail(error.message));
     }
   };
-};
-
-export const setActivePage = (pageNumber) => {
-  setActivePageIds(pageNumber);
 };

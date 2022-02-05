@@ -3,6 +3,8 @@ import { storyItemTypes } from "./storyItems.types";
 const initialState = {
   newStoryIds: [],
   activePageIds: [],
+  //   numberOfPages: "",
+  perPage: 10,
   pageNumber: 1,
   isLoadingStoryItems: false,
   errMsg: "",
@@ -19,6 +21,7 @@ export const storyItemsReducer = (state = initialState, action) => {
         ...state,
         isLoadingStoryItems: false,
         newStoryIds: action.payload,
+        numberOfPages: Math.ceil(action.payload.length / state.perPage),
       };
     }
 
@@ -28,8 +31,8 @@ export const storyItemsReducer = (state = initialState, action) => {
 
     case storyItemTypes.SET_ACTIVE_PAGE_IDS: {
       const displayedActivePageIds = state.newStoryIds.slice(
-        state.pageNumber * 10 - 10,
-        state.pageNumber * 10 - 1
+        action.payload * state.perPage - state.perPage,
+        action.payload * state.perPage - 1
       );
       return {
         ...state,
