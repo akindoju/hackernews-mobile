@@ -1,44 +1,47 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
-import { Button, FlatList, StyleSheet, Text, View } from "react-native";
-import Card from "./src/components/Card";
+import Navigator from "./src/Navigator";
+import About from "./src/screens/About";
+import { useState } from "react";
+import * as Font from "expo-font";
+import { Provider } from "react-redux";
+import { store } from "./src/redux/store";
+import AppLoading from "expo-app-loading";
 import Homepage from "./src/screens/Homepage";
+import { Text, View, StyleSheet } from "react-native";
+
+const fetchFonts = () => {
+  return Font.loadAsync({
+    lexendDeca: require("./assets/fonts/LexendDeca-Regular.ttf"),
+    lexendDecaBold: require("./assets/fonts/LexendDeca-Bold.ttf"),
+  });
+};
 
 export default function App() {
-  const [retrievedIds, setRetrievedIds] = useState([]);
+  const [fontLoaded, setFontLoaded] = useState(false);
 
-  const fetchIds = async () => {
-    axios
-      .get("https://hacker-news.firebaseio.com/v0/newstories.json?print=pretty")
-      .then(({ data }) => setRetrievedIds(data))
-      .catch((err) => console.log(err));
-  };
-
-  const CardComponent = ({ item }) => <Card receivedId={item} />;
-
+  if (!fontLoaded) {
+    return (
+      <AppLoading
+        startAsync={fetchFonts}
+        onFinish={() => setFontLoaded(true)}
+        onError={console.warn}
+      />
+    );
+  }
   return (
-    <View style={styles.container}>
-      <Homepage />
-      <Button
-        onPress={() => {
-          fetchIds();
-        }}
-        title="Fetch"
-      />
-      <FlatList
-        keyExtractor={(item) => item}
-        data={retrievedIds}
-        renderItem={CardComponent}
-      />
-    </View>
+    <Provider store={store}>
+      <View style={styles.container}>
+        {/* <Navigator /> */}
+        <Homepage />
+        {/* <About /> */}
+      </View>
+    </Provider>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
+    textAlign: "center",
     justifyContent: "center",
   },
 });

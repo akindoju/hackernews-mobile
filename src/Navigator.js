@@ -1,6 +1,6 @@
 import { createAppContainer } from "react-navigation";
-// import { createDrawerNavigator } from "react-navigation-drawer";
-// import { createStackNavigator } from "react-navigation-stack";
+import { createDrawerNavigator } from "react-navigation-drawer";
+import { createStackNavigator } from "react-navigation-stack";
 import About from "./screens/About";
 import Homepage from "./screens/Homepage";
 
