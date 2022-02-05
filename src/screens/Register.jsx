@@ -4,6 +4,7 @@ import { Surface, Headline, TextInput, Button } from "react-native-paper";
 import { Colors } from "../constants/Colors";
 
 const Register = () => {
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -12,6 +13,15 @@ const Register = () => {
       <Text style={styles.headline}>Register</Text>
 
       <Surface style={styles.inputs}>
+        <TextInput
+          label="Name"
+          value={name}
+          onChangeText={(name) => setName(name)}
+          mode="outlined"
+          outlineColor={Colors.primary}
+          activeOutlineColor={Colors.primary}
+        />
+
         <TextInput
           label="Email"
           value={email}
@@ -41,7 +51,7 @@ const Register = () => {
       </Surface>
 
       <Text style={styles.text}>
-        Don't have an account? <Text style={styles.register}>Register</Text>
+        Already have an account? <Text style={styles.register}>Login</Text>
       </Text>
     </Surface>
   );
@@ -63,8 +73,8 @@ const styles = StyleSheet.create({
   },
 
   inputs: {
-    justifyContent: "space-around",
-    height: 200,
+    justifyContent: "space-between",
+    height: 300,
   },
 
   text: {

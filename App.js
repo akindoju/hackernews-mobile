@@ -8,6 +8,7 @@ import AppLoading from "expo-app-loading";
 import Homepage from "./src/screens/Homepage";
 import { Text, View, StyleSheet } from "react-native";
 import Login from "./src/screens/Login";
+import Register from "./src/screens/Register";
 
 const fetchFonts = () => {
   return Font.loadAsync({
@@ -33,7 +34,8 @@ export default function App() {
       <View style={styles.container}>
         {/* <Navigator /> */}
         {/* <Homepage /> */}
-        <Login />
+        {/* <Login /> */}
+        <Register />
         {/* <About /> */}
       </View>
     </Provider>
