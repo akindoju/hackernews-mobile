@@ -7,6 +7,7 @@ import { store } from "./src/redux/store";
 import AppLoading from "expo-app-loading";
 import Homepage from "./src/screens/Homepage";
 import { Text, View, StyleSheet } from "react-native";
+import Login from "./src/screens/Login";
 
 const fetchFonts = () => {
   return Font.loadAsync({
@@ -31,7 +32,8 @@ export default function App() {
     <Provider store={store}>
       <View style={styles.container}>
         {/* <Navigator /> */}
-        <Homepage />
+        {/* <Homepage /> */}
+        <Login />
         {/* <About /> */}
       </View>
     </Provider>
