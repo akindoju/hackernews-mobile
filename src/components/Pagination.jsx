@@ -3,7 +3,10 @@ import { IconButton, Surface, TextInput, Text } from "react-native-paper";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { Colors } from "../constants/Colors";
-import { setActivePageIds } from "../redux/storyItems/storyItems.actions";
+import {
+  setActivePageIds,
+  fetchStoryItems,
+} from "../redux/storyItems/storyItems.actions";
 
 const Pagination = () => {
   const pageNumber = useSelector((state) => state.storyItems.pageNumber);
@@ -40,7 +43,7 @@ const Pagination = () => {
         onPress={() => {
           dispatch(setActivePageIds(pageNumber + 1));
         }}
-        disabled={pageNumber > numberOfPages}
+        disabled={pageNumber >= numberOfPages}
       />
     </Surface>
   );

@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { View, StyleSheet, FlatList } from "react-native";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
@@ -6,11 +7,18 @@ import Pagination from "../components/Pagination";
 // import { HeaderButtons, Item } from "react-navigation-header-buttons";
 // import CustomHeaderButton from "../components/CustomHeaderButton";
 import { Colors } from "../constants/Colors";
+import { fetchStoryItemsAsync } from "../redux/storyItems/storyItems.actions";
 
 const Homepage = () => {
   const retrievedIds = useSelector((state) => state.storyItems.activePageIds);
 
   const CardItem = ({ item }) => <CardComponent receivedId={item} />;
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchStoryItemsAsync());
+  }, []);
 
   return (
     <View style={styles.container}>

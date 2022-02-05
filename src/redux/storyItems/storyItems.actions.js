@@ -20,7 +20,7 @@ export const setActivePageIds = (page) => ({
   payload: page,
 });
 
-export const fetchStoryItems = (page = 1) => {
+export const fetchStoryItemsAsync = (page = 1) => {
   return async (dispatch, getState) => {
     dispatch(fetchStoryItemsStart());
     try {

@@ -3,7 +3,7 @@ import { storyItemTypes } from "./storyItems.types";
 const initialState = {
   newStoryIds: [],
   activePageIds: [],
-  //   numberOfPages: "",
+  numberOfPages: 1,
   perPage: 10,
   pageNumber: 1,
   isLoadingStoryItems: false,

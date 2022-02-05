@@ -33,9 +33,9 @@ export default function App() {
     <Provider store={store}>
       <View style={styles.container}>
         {/* <Navigator /> */}
-        {/* <Homepage /> */}
+        <Homepage />
         {/* <Login /> */}
-        <Register />
+        {/* <Register /> */}
         {/* <About /> */}
       </View>
     </Provider>
