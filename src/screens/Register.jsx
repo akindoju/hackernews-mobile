@@ -1,13 +1,18 @@
 import { useState } from "react";
-import { StyleSheet, Text } from "react-native";
-import { Surface, TextInput, Button } from "react-native-paper";
+import { useDispatch } from "react-redux";
 import { Colors } from "../constants/Colors";
+import { StyleSheet, Text } from "react-native";
+import { registerUserAsync } from "../redux/user/user.actions";
+import { Surface, TextInput, Button } from "react-native-paper";
+// import { registerUserIntoDatabase } from "../helpers/database";
 
 const Register = ({ navigation }) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isPasswordHidden, setIsPasswordHidden] = useState(true);
+
+  const dispatch = useDispatch();
 
   return (
     <Surface style={styles.container}>
@@ -52,7 +57,14 @@ const Register = ({ navigation }) => {
 
         <Button
           mode="contained"
-          onPress={() => {}}
+          onPress={() => {
+            dispatch(registerUserAsync(name, email, password));
+            // const registeredData = dispatch(
+            //   registerUserIntoDatabase(name, email, password)
+            // );
+            // console.log(registeredData, "registeredUser");
+            // console.log("Clicked");
+          }}
           color={Colors.primary}
           labelStyle={{ fontFamily: "lexendDeca" }}
         >

@@ -1,11 +1,14 @@
-import React, { useState } from "react";
 import * as Font from "expo-font";
+import React, { useState } from "react";
 import { Provider } from "react-redux";
 import { store } from "./src/redux/store";
 import { StyleSheet } from "react-native";
 import AppLoading from "expo-app-loading";
+import { init } from "./src/helpers/database";
 import AuthNavigator from "./src/navigation/AuthNavigation";
 import HomepageNavigator from "./src/navigation/HomepageNavigation";
+
+init();
 
 const fetchFonts = () => {
   return Font.loadAsync({

@@ -1,12 +1,16 @@
 import { useState } from "react";
-import { StyleSheet, Text } from "react-native";
-import { Surface, TextInput, Button } from "react-native-paper";
+import { useDispatch } from "react-redux";
 import { Colors } from "../constants/Colors";
+import { StyleSheet, Text } from "react-native";
+import { loginUserAsync } from "../redux/user/user.actions";
+import { Surface, TextInput, Button } from "react-native-paper";
 
 const Login = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isPasswordHidden, setIsPasswordHidden] = useState(true);
+
+  const dispatch = useDispatch();
 
   return (
     <Surface style={styles.container}>
@@ -44,6 +48,9 @@ const Login = ({ navigation }) => {
           mode="contained"
           color={Colors.primary}
           labelStyle={{ fontFamily: "lexendDeca" }}
+          onPress={() => {
+            dispatch(loginUserAsync(email, password));
+          }}
         >
           Login
         </Button>
