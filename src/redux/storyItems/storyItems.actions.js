@@ -21,7 +21,7 @@ export const setActivePageIds = (page) => ({
 });
 
 export const fetchStoryItemsAsync = (page = 1) => {
-  return async (dispatch, getState) => {
+  return async (dispatch) => {
     dispatch(fetchStoryItemsStart());
     try {
       const { data } = await axios.get(

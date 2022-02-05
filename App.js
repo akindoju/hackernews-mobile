@@ -1,14 +1,10 @@
-import Navigator from "./src/Navigator";
-import About from "./src/screens/About";
-import { useState } from "react";
+import React, { useState } from "react";
 import * as Font from "expo-font";
 import { Provider } from "react-redux";
 import { store } from "./src/redux/store";
-import AppLoading from "expo-app-loading";
 import Homepage from "./src/screens/Homepage";
-import { Text, View, StyleSheet } from "react-native";
-import Login from "./src/screens/Login";
-import Register from "./src/screens/Register";
+import { StyleSheet } from "react-native";
+import AppLoading from "expo-app-loading";
 
 const fetchFonts = () => {
   return Font.loadAsync({
@@ -19,6 +15,7 @@ const fetchFonts = () => {
 
 export default function App() {
   const [fontLoaded, setFontLoaded] = useState(false);
+  // const [fontLoaded, setFontLoaded] = useState(false);
 
   if (!fontLoaded) {
     return (
@@ -29,11 +26,12 @@ export default function App() {
       />
     );
   }
+
   return (
     <Provider store={store}>
       {/* <View style={styles.container}> */}
-      <Navigator />
-      {/* <Homepage /> */}
+      {/* <Navigator /> */}
+      <Homepage />
       {/* <Login /> */}
       {/* <Register /> */}
       {/* <About /> */}
@@ -44,7 +42,7 @@ export default function App() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    // flex: 1,
     textAlign: "center",
     justifyContent: "center",
   },

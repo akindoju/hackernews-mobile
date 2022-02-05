@@ -1,17 +1,20 @@
-import { useEffect } from "react";
-import { View, StyleSheet, FlatList } from "react-native";
-import { IconButton } from "react-native-paper";
+import { useEffect, useState } from "react";
+import { View, StyleSheet, FlatList, Image, Text } from "react-native";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import CardComponent from "../components/CardComponent";
 import Pagination from "../components/Pagination";
-// import { HeaderButtons, Item } from "react-navigation-header-buttons";
-// import CustomHeaderButton from "../components/CustomHeaderButton";
+import { HeaderButtons, Item } from "react-navigation-header-buttons";
+import CustomHeaderButton from "../components/CustomHeaderButton";
 import { Colors } from "../constants/Colors";
 import { fetchStoryItemsAsync } from "../redux/storyItems/storyItems.actions";
 
-const Homepage = ({ navigation }) => {
+const Homepage = () => {
   const retrievedIds = useSelector((state) => state.storyItems.activePageIds);
+  const isLoadingStoryItems = useSelector(
+    (state) => state.storyItems.isLoadingStoryItems
+  );
+  const pageNumber = useSelector((state) => state.storyItems.pageNumber);
 
   const CardItem = ({ item }) => <CardComponent receivedId={item} />;
 
@@ -27,7 +30,10 @@ const Homepage = ({ navigation }) => {
         keyExtractor={(item) => item}
         data={retrievedIds}
         renderItem={CardItem}
-        // onRefresh={() => fetchIds()}
+        onRefresh={() => {
+          dispatch(fetchStoryItemsAsync(pageNumber));
+        }}
+        refreshing={isLoadingStoryItems}
       />
       <Pagination />
     </View>
@@ -36,31 +42,30 @@ const Homepage = ({ navigation }) => {
 
 Homepage.navigationOptions = (navData) => {
   return {
-    //   headerTitle: 'Filter Meals',
+    headerTitle: () => {
+      <View style={styles.headerTitle}>
+        <Image
+          source={require("../../assets/hackerNewsLogo.png")}
+          style={styles.image}
+        />
+        <Text style={styles.headerTitleText}>Hacker News</Text>
+      </View>;
+    },
     headerStyle: {
       backgroundColor: Colors.primary,
     },
 
     headerLeft: () => {
-      // <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
-      //   <Item
-      //     title="Menu"
-      //     iconName="ios-menu"
-      //     onPress={() => {
-      //       navData.navigation.toggleDrawer();
-      //     }}
-      //   />
-      // </HeaderButtons>;
+      <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
+        <Item
+          title="Menu"
+          iconName="ios-menu"
+          onPress={() => {
+            navData.navigation.toggleDrawer();
+          }}
+        />
+      </HeaderButtons>;
     },
-    // headerRight: () => {
-    //   <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
-    //     <Item
-    //       title="Search"
-    //       iconName="ios-search"
-    //       //   onPress={navData.navigation.getParam("save")}
-    //     />
-    //   </HeaderButtons>;
-    // },
   };
 };
 
@@ -70,6 +75,24 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
+  },
+
+  headerTitle: {
+    flexDirection: "row",
+    alignItems: "flex-end",
+    justifyContent: "center",
+    width: "100%",
+  },
+
+  image: {
+    height: 35,
+    width: 35,
+  },
+
+  headerTitleText: {
+    color: "white",
+    fontFamily: "lexendDeca",
+    fontSize: 25,
   },
 });
 

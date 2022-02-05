@@ -32,7 +32,7 @@ const CardComponent = ({ receivedId }) => {
         return `${displayedTimeDay} days ago`;
       });
     }
-  });
+  }, []);
 
   return (
     <TouchableNativeFeedback>

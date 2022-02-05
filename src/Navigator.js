@@ -28,6 +28,9 @@ const AuthNavigator = createStackNavigator(
 
 const MainNavigator = createDrawerNavigator(
   {
+    Auth: {
+      screen: AuthNavigator,
+    },
     Homepage: {
       screen: StackNavigator,
       navigationOptions: {
@@ -39,9 +42,6 @@ const MainNavigator = createDrawerNavigator(
       navigationOptions: {
         drawerLabel: "About",
       },
-    },
-    Auth: {
-      screen: AuthNavigator,
     },
   }
   // {
