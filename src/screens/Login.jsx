@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { StyleSheet, Text } from "react-native";
-import { Surface, Headline, TextInput, Button } from "react-native-paper";
+import { Surface, TextInput, Button } from "react-native-paper";
 import { Colors } from "../constants/Colors";
 
 const Login = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isPasswordHidden, setIsPasswordHidden] = useState(true);
 
   return (
     <Surface style={styles.container}>
@@ -22,18 +23,25 @@ const Login = ({ navigation }) => {
         />
 
         <TextInput
-          right={<TextInput.Icon name="eye" />}
+          right={
+            <TextInput.Icon
+              name="eye"
+              onPress={() => {
+                setIsPasswordHidden(!isPasswordHidden);
+              }}
+            />
+          }
           label="Password"
           value={password}
           onChangeText={(email) => setPassword(email)}
           mode="outlined"
           outlineColor={Colors.primary}
           activeOutlineColor={Colors.primary}
+          secureTextEntry={isPasswordHidden ? true : false}
         />
 
         <Button
           mode="contained"
-          onPress={() => navigation.replace("Homepage")}
           color={Colors.primary}
           labelStyle={{ fontFamily: "lexendDeca" }}
         >
