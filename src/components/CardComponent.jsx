@@ -1,23 +1,12 @@
 import axios from "axios";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { Surface } from "react-native-paper";
 import { Colors } from "../constants/Colors";
-import {
-  fetchStoryItems,
-  setActivePage,
-} from "../redux/storyItems/storyItems.actions";
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableNativeFeedback,
-  Button,
-} from "react-native";
+import { View, Text, StyleSheet, TouchableNativeFeedback } from "react-native";
 
 const CardComponent = ({ receivedId }) => {
   const [receivedData, setReceivedData] = useState("");
+  const [displayedTime, setDisplayedTime] = useState("");
 
   useEffect(() => {
     axios
@@ -30,7 +19,20 @@ const CardComponent = ({ receivedId }) => {
       .catch((err) => console.log(err));
   }, [receivedId]);
 
-  const receivedTime = Math.floor(receivedData.time / 1000 / 60 / 60);
+  useEffect(() => {
+    const receivedTime = Math.floor(receivedData.time / 1000 / 60 / 60);
+
+    if (receivedTime > 1 && receivedTime < 24) {
+      setDisplayedTime(receivedTime);
+    } else if (receivedTime < 1) {
+      setDisplayedTime("Less than an hour ago");
+    } else if (receivedTime > 24) {
+      setDisplayedTime(() => {
+        const displayedTimeDay = Math.round(receivedTime / 24);
+        return `${displayedTimeDay} days ago`;
+      });
+    }
+  });
 
   return (
     <TouchableNativeFeedback>
@@ -46,7 +48,7 @@ const CardComponent = ({ receivedId }) => {
               <Text>
                 by <Text style={styles.by}>{receivedData.by}</Text> |
               </Text>
-              <Text style={styles.time}>recehours ago</Text>
+              <Text style={styles.time}> {displayedTime}</Text>
             </View>
           </View>
         </Surface>
@@ -65,7 +67,8 @@ const styles = StyleSheet.create({
     width: 350,
     alignItems: "center",
     justifyContent: "space-between",
-    marginBottom: "1%",
+    marginVertical: "1%",
+
     elevation: 4,
     borderWidth: 1,
     borderColor: "#ccc",

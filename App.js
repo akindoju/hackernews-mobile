@@ -31,13 +31,13 @@ export default function App() {
   }
   return (
     <Provider store={store}>
-      <View style={styles.container}>
-        {/* <Navigator /> */}
-        <Homepage />
-        {/* <Login /> */}
-        {/* <Register /> */}
-        {/* <About /> */}
-      </View>
+      {/* <View style={styles.container}> */}
+      <Navigator />
+      {/* <Homepage /> */}
+      {/* <Login /> */}
+      {/* <Register /> */}
+      {/* <About /> */}
+      {/* </View> */}
     </Provider>
   );
 }

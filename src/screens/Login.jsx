@@ -3,7 +3,7 @@ import { StyleSheet, Text } from "react-native";
 import { Surface, Headline, TextInput, Button } from "react-native-paper";
 import { Colors } from "../constants/Colors";
 
-const Login = () => {
+const Login = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -33,15 +33,22 @@ const Login = () => {
 
         <Button
           mode="contained"
-          onPress={() => console.log("Pressed")}
+          onPress={() => navigation.replace("Homepage")}
           color={Colors.primary}
+          labelStyle={{ fontFamily: "lexendDeca" }}
         >
           Login
         </Button>
       </Surface>
 
       <Text style={styles.text}>
-        Don't have an account? <Text style={styles.register}>Register</Text>
+        Don't have an account?{" "}
+        <Text
+          style={styles.register}
+          onPress={() => navigation.navigate("Register")}
+        >
+          Register
+        </Text>
       </Text>
     </Surface>
   );

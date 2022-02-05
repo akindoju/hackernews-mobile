@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { View, StyleSheet, FlatList } from "react-native";
+import { IconButton } from "react-native-paper";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import CardComponent from "../components/CardComponent";
@@ -9,7 +10,7 @@ import Pagination from "../components/Pagination";
 import { Colors } from "../constants/Colors";
 import { fetchStoryItemsAsync } from "../redux/storyItems/storyItems.actions";
 
-const Homepage = () => {
+const Homepage = ({ navigation }) => {
   const retrievedIds = useSelector((state) => state.storyItems.activePageIds);
 
   const CardItem = ({ item }) => <CardComponent receivedId={item} />;
@@ -40,17 +41,17 @@ Homepage.navigationOptions = (navData) => {
       backgroundColor: Colors.primary,
     },
 
-    // headerLeft: () => {
-    //   <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
-    //     <Item
-    //       title="Menu"
-    //       iconName="ios-menu"
-    //       onPress={() => {
-    //         navData.navigation.toggleDrawer();
-    //       }}
-    //     />
-    //   </HeaderButtons>;
-    // },
+    headerLeft: () => {
+      // <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
+      //   <Item
+      //     title="Menu"
+      //     iconName="ios-menu"
+      //     onPress={() => {
+      //       navData.navigation.toggleDrawer();
+      //     }}
+      //   />
+      // </HeaderButtons>;
+    },
     // headerRight: () => {
     //   <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
     //     <Item

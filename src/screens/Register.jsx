@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { StyleSheet, Text } from "react-native";
-import { Surface, Headline, TextInput, Button } from "react-native-paper";
+import { Surface, TextInput, Button } from "react-native-paper";
 import { Colors } from "../constants/Colors";
 
-const Register = () => {
+const Register = ({ navigation }) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -45,13 +45,20 @@ const Register = () => {
           mode="contained"
           onPress={() => console.log("Pressed")}
           color={Colors.primary}
+          labelStyle={{ fontFamily: "lexendDeca" }}
         >
           Register
         </Button>
       </Surface>
 
       <Text style={styles.text}>
-        Already have an account? <Text style={styles.register}>Login</Text>
+        Already have an account?{" "}
+        <Text
+          style={styles.register}
+          onPress={() => navigation.navigate("Login")}
+        >
+          Login
+        </Text>
       </Text>
     </Surface>
   );
