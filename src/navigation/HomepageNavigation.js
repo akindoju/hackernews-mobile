@@ -1,12 +1,12 @@
 import About from "../screens/About";
 import Homepage from "../screens/Homepage";
 import { NavigationContainer } from "@react-navigation/native";
-import { createDrawerNavigator, DrawerItem } from "@react-navigation/drawer";
+import { createDrawerNavigator } from "@react-navigation/drawer";
 import { createStackNavigator } from "@react-navigation/stack";
 import WebViewScreen from "../screens/WebView";
 import { logout } from "../redux/user/user.actions";
 import { useDispatch } from "react-redux";
-import { Button, View, StyleSheet, Image, Text } from "react-native";
+import { StyleSheet } from "react-native";
 import { Colors } from "../constants/Colors";
 import { CustomDrawerContent } from "../components/CustomDrawerContent";
 
@@ -24,9 +24,6 @@ const HomepageNavigator = () => {
             backgroundColor: "#eee",
             justifyContent: "space-between",
           },
-          // headerBackgroundContainerStyle: { backgroundColor: Colors.primary },
-
-          // title: "Hacker News",
           headerStyle: {
             backgroundColor: Colors.primary,
           },
@@ -49,7 +46,6 @@ const HomepageNavigator = () => {
           options={{
             title: "Hacker News",
             drawerActiveBackgroundColor: "rgba(255, 102, 0,0.2)",
-            // drawerActiveTintColor: "white",
           }}
         />
         <Home.Screen
@@ -81,13 +77,6 @@ const WebViewNavigator = () => {
 };
 
 const styles = StyleSheet.create({
-  // container: {
-  //   flex: 1,
-  //   backgroundColor: "#fff",
-  //   alignItems: "center",
-  //   justifyContent: "center",
-  // },
-
   headerTitle: {
     flexDirection: "row",
     alignItems: "flex-end",
@@ -99,12 +88,6 @@ const styles = StyleSheet.create({
     height: 100,
     width: 100,
   },
-
-  // headerTitleText: {
-  //   color: "white",
-  //   fontFamily: "lexendDeca",
-  //   fontSize: 25,
-  // },
 });
 
 export default HomepageNavigator;

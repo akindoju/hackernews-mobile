@@ -60,7 +60,6 @@ const WebViewScreen = (props) => {
       <WebView
         ref={webviewRef}
         source={{ uri: storyUrl }}
-        // originWhitelist={["https://www.biu.edu.ng"]}
         originWhitelist={["*"]}
         onLoad={hideSpinner}
         onError={loadErrorHandler}

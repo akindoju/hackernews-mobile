@@ -28,9 +28,6 @@ export const registerUserIntoDatabase = (name, email, password) => {
         "insert into users (name, email, password) values (?, ?, ?);",
         [name, email, password],
         (_, result) => {
-          if (!result.rows.length) {
-            reject(new Error());
-          }
           resolve(result);
         },
         (_, err) => {
@@ -47,8 +44,6 @@ export const logUserIntoDatabase = (email, password) => {
   const promise = new Promise((resolve, reject) => {
     db.transaction((tx) => {
       tx.executeSql(
-        // "select * from users",
-        // [],
         "select * from users where email = ? and password = ?",
         [email, password],
 

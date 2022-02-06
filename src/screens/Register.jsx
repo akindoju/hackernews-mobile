@@ -119,6 +119,9 @@ const Register = ({ navigation }) => {
             setName("");
             setEmail("");
             setPassword("");
+            setIsInvalidPassword("");
+            setIsInvalidName("");
+            setIsInvalidEmail("");
           }}
         >
           Login

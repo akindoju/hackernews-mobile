@@ -2,7 +2,6 @@ import * as Font from "expo-font";
 import React, { useState } from "react";
 import { Provider } from "react-redux";
 import { store, persistor } from "./src/redux/store";
-import { StyleSheet } from "react-native";
 import AppLoading from "expo-app-loading";
 import { init } from "./src/helpers/database";
 import MainNavigator from "./src/navigation/MainNavigator";
@@ -38,13 +37,5 @@ const App = () => {
     </Provider>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    // flex: 1,
-    textAlign: "center",
-    justifyContent: "center",
-  },
-});
 
 export default App;

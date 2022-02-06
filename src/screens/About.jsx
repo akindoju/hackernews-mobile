@@ -1,5 +1,4 @@
 import { Text, View, StyleSheet, ScrollView } from "react-native";
-import { Headline, Surface } from "react-native-paper";
 import { Colors } from "../constants/Colors";
 
 const About = () => {
@@ -29,7 +28,6 @@ const About = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // padding: 20,
     backgroundColor: "#eee",
   },
 

@@ -31,7 +31,6 @@ export function CustomDrawerContent(props) {
         <DrawerItemList {...props} inActiveBackgroundColor={Colors.primary} />
         <DrawerItem
           label="Sign Out"
-          // label={{ focused, color }) => <Text style={{ color }}>{focused ? 'Focused text' : 'Unfocused text'}</Text>
           onPress={() => {
             if (props.logout) {
               props.logout();

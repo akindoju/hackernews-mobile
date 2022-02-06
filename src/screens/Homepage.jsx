@@ -1,12 +1,9 @@
 import { useEffect } from "react";
-import { View, StyleSheet, FlatList, Image, Text } from "react-native";
+import { View, StyleSheet, FlatList } from "react-native";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import CardComponent from "../components/CardComponent";
 import Pagination from "../components/Pagination";
-import { HeaderButtons, Item } from "react-navigation-header-buttons";
-import CustomHeaderButton from "../components/CustomHeaderButton";
-import { Colors } from "../constants/Colors";
 import { fetchStoryItemsAsync } from "../redux/storyItems/storyItems.actions";
 
 const Homepage = ({ navigation }) => {
@@ -41,35 +38,6 @@ const Homepage = ({ navigation }) => {
     </View>
   );
 };
-
-// Homepage.navigationOptions = (navData) => {
-//   return {
-//     headerTitle: () => {
-//       <View style={styles.headerTitle}>
-//         <Image
-//           source={require("../../assets/hackerNewsLogo.png")}
-//           style={styles.image}
-//         />
-//         <Text style={styles.headerTitleText}>Hacker News</Text>
-//       </View>;
-//     },
-//     headerStyle: {
-//       backgroundColor: Colors.primary,
-//     },
-
-//     headerLeft: () => {
-//       <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
-//         <Item
-//           title="Menu"
-//           iconName="ios-menu"
-//           onPress={() => {
-//             navData.navigation.toggleDrawer();
-//           }}
-//         />
-//       </HeaderButtons>;
-//     },
-//   };
-// };
 
 const styles = StyleSheet.create({
   container: {

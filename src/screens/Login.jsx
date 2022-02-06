@@ -90,6 +90,7 @@ const Login = ({ navigation }) => {
             dispatch(logout());
             setEmail("");
             setPassword("");
+            setIsInvalidEmail("");
           }}
         >
           Register
