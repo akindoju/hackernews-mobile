@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { View, StyleSheet, FlatList, Image, Text } from "react-native";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
@@ -9,14 +9,16 @@ import CustomHeaderButton from "../components/CustomHeaderButton";
 import { Colors } from "../constants/Colors";
 import { fetchStoryItemsAsync } from "../redux/storyItems/storyItems.actions";
 
-const Homepage = () => {
+const Homepage = ({ navigation }) => {
   const retrievedIds = useSelector((state) => state.storyItems.activePageIds);
   const isLoadingStoryItems = useSelector(
     (state) => state.storyItems.isLoadingStoryItems
   );
   const pageNumber = useSelector((state) => state.storyItems.pageNumber);
 
-  const CardItem = ({ item }) => <CardComponent receivedId={item} />;
+  const CardItem = ({ item }) => (
+    <CardComponent receivedId={item} navigation={navigation} />
+  );
 
   const dispatch = useDispatch();
 
@@ -40,34 +42,34 @@ const Homepage = () => {
   );
 };
 
-Homepage.navigationOptions = (navData) => {
-  return {
-    headerTitle: () => {
-      <View style={styles.headerTitle}>
-        <Image
-          source={require("../../assets/hackerNewsLogo.png")}
-          style={styles.image}
-        />
-        <Text style={styles.headerTitleText}>Hacker News</Text>
-      </View>;
-    },
-    headerStyle: {
-      backgroundColor: Colors.primary,
-    },
+// Homepage.navigationOptions = (navData) => {
+//   return {
+//     headerTitle: () => {
+//       <View style={styles.headerTitle}>
+//         <Image
+//           source={require("../../assets/hackerNewsLogo.png")}
+//           style={styles.image}
+//         />
+//         <Text style={styles.headerTitleText}>Hacker News</Text>
+//       </View>;
+//     },
+//     headerStyle: {
+//       backgroundColor: Colors.primary,
+//     },
 
-    headerLeft: () => {
-      <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
-        <Item
-          title="Menu"
-          iconName="ios-menu"
-          onPress={() => {
-            navData.navigation.toggleDrawer();
-          }}
-        />
-      </HeaderButtons>;
-    },
-  };
-};
+//     headerLeft: () => {
+//       <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
+//         <Item
+//           title="Menu"
+//           iconName="ios-menu"
+//           onPress={() => {
+//             navData.navigation.toggleDrawer();
+//           }}
+//         />
+//       </HeaderButtons>;
+//     },
+//   };
+// };
 
 const styles = StyleSheet.create({
   container: {

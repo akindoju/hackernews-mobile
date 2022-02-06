@@ -3,16 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Colors } from "../constants/Colors";
 import { Alert, Keyboard, StyleSheet, Text, Touchable } from "react-native";
 import { loginUserAsync } from "../redux/user/user.actions";
-import {
-  Surface,
-  TextInput,
-  Button,
-  HelperText,
-  Portal,
-  Paragraph,
-  Dialog,
-} from "react-native-paper";
-import { View } from "react-native-web";
+import { Surface, TextInput, Button, HelperText } from "react-native-paper";
 
 const Login = ({ navigation }) => {
   const [email, setEmail] = useState("");

@@ -20,6 +20,11 @@ export const setActivePageIds = (page) => ({
   payload: page,
 });
 
+export const saveStoryUrl = (url) => ({
+  type: storyItemTypes.SAVE_STORY_URL,
+  payload: url,
+});
+
 export const fetchStoryItemsAsync = (page = 1) => {
   return async (dispatch) => {
     dispatch(fetchStoryItemsStart());
@@ -34,3 +39,5 @@ export const fetchStoryItemsAsync = (page = 1) => {
     }
   };
 };
+
+saveStoryUrl();

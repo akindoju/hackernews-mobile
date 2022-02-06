@@ -2,9 +2,11 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Surface } from "react-native-paper";
 import { Colors } from "../constants/Colors";
+import { saveStoryUrl } from "../redux/storyItems/storyItems.actions";
 import { View, Text, StyleSheet, TouchableNativeFeedback } from "react-native";
+import { useSelector, useDispatch } from "react-redux";
 
-const CardComponent = ({ receivedId }) => {
+const CardComponent = ({ receivedId, navigation }) => {
   const [receivedData, setReceivedData] = useState("");
   const [displayedTime, setDisplayedTime] = useState("");
 
@@ -34,8 +36,15 @@ const CardComponent = ({ receivedId }) => {
     }
   }, []);
 
+  const dispatch = useDispatch();
+
   return (
-    <TouchableNativeFeedback>
+    <TouchableNativeFeedback
+      onPress={() => {
+        dispatch(saveStoryUrl(receivedData.url));
+        navigation.navigate("WebViewScreen");
+      }}
+    >
       <View>
         <Surface style={styles.surface}>
           <View style={styles.score}>

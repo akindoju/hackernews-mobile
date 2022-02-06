@@ -8,6 +8,7 @@ const initialState = {
   pageNumber: 1,
   isLoadingStoryItems: false,
   errMsg: "",
+  storyUrl: "",
 };
 
 export const storyItemsReducer = (state = initialState, action) => {
@@ -39,6 +40,10 @@ export const storyItemsReducer = (state = initialState, action) => {
         pageNumber: action.payload,
         activePageIds: displayedActivePageIds,
       };
+    }
+
+    case storyItemTypes.SAVE_STORY_URL: {
+      return { ...state, storyUrl: action.payload };
     }
 
     default:
