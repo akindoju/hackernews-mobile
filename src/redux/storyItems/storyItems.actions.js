@@ -1,4 +1,5 @@
 import axios from "axios";
+import { userTypes } from "../user/user.types";
 import { storyItemTypes } from "./storyItems.types";
 
 const fetchStoryItemsStart = () => ({
@@ -23,6 +24,10 @@ export const setActivePageIds = (page) => ({
 export const saveStoryUrl = (url) => ({
   type: storyItemTypes.SAVE_STORY_URL,
   payload: url,
+});
+
+export const logout = () => ({
+  type: storyItemTypes.LOGOUT,
 });
 
 export const fetchStoryItemsAsync = (page = 1) => {

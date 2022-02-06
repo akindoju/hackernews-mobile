@@ -1,18 +1,12 @@
-import { displayName } from "react-native/Libraries/Text/TextAncestor";
 import {
   logUserIntoDatabase,
   registerUserIntoDatabase,
 } from "../../helpers/database";
-import { clearStoriesState } from "../storyItems/storyItems.actions";
+
 import { userTypes } from "./user.types";
 
 const registerUserStart = () => ({
   type: userTypes.REGISTER_USER_START,
-});
-
-const registerUserSuccess = (currentUser) => ({
-  type: userTypes.REGISTER_USER_SUCCESS,
-  payload: currentUser,
 });
 
 const registerUserFail = (message) => ({
@@ -42,12 +36,8 @@ export const registerUserAsync = (name, email, password) => {
   return async (dispatch) => {
     dispatch(registerUserStart());
     try {
-      const registeredData = await registerUserIntoDatabase(
-        name,
-        email,
-        password
-      );
-      dispatch(registerUserSuccess(registeredData));
+      await registerUserIntoDatabase(name, email, password);
+      dispatch(loginUserSuccess({ name, email }));
     } catch (error) {
       dispatch(registerUserFail(error.message));
     }
@@ -60,9 +50,13 @@ export const loginUserAsync = (email, password) => {
     try {
       const loggedInData = await logUserIntoDatabase(email, password);
       console.log(loggedInData, "loggedInData");
-      dispatch(loginUserSuccess(loggedInData));
+      const userObj = { ...loggedInData.rows._array[0] };
+      delete userObj.password;
+
+      dispatch(loginUserSuccess(userObj));
     } catch (error) {
-      dispatch(loginUserFail(error.message));
+      console.log(error, "errrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrror");
+      dispatch(loginUserFail(error));
     }
   };
 };

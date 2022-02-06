@@ -2,7 +2,8 @@ import { userTypes } from "./user.types";
 
 const initialState = {
   currentUser: null,
-  errMsg: "",
+  loginErrMsg: "",
+  registerErrMsg: "",
 };
 
 export const userReducer = (state = initialState, action) => {
@@ -17,11 +18,13 @@ export const userReducer = (state = initialState, action) => {
       return {
         ...state,
         currentUser: action.payload.rows._array[0],
+        loginErrMsg: "",
+        registerErrMsg: "",
       };
     }
 
     case userTypes.REGISTER_USER_FAIL: {
-      return { ...state, errMsg: action.payload };
+      return { ...state, registerErrMsg: action.payload };
     }
 
     case userTypes.LOGIN_USER_START: {
@@ -31,12 +34,14 @@ export const userReducer = (state = initialState, action) => {
     case userTypes.LOGIN_USER_SUCCESS: {
       return {
         ...state,
-        currentUser: action.payload.rows._array[0],
+        currentUser: action.payload,
+        loginErrMsg: "",
+        registerErrMsg: "",
       };
     }
 
     case userTypes.LOGIN_USER_FAIL: {
-      return { ...state, errMsg: action.payload };
+      return { ...state, loginErrMsg: action.payload };
     }
 
     case userTypes.LOGOUT: {

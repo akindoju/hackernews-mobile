@@ -57,7 +57,10 @@ const CardComponent = ({ receivedId, navigation }) => {
               <Text>
                 by <Text style={styles.by}>{receivedData.by}</Text> |
               </Text>
-              <Text style={styles.time}> {displayedTime}</Text>
+              <Text style={styles.time}>
+                {" "}
+                {new Date(receivedData.time * 1000).toDateString()}
+              </Text>
             </View>
           </View>
         </Surface>

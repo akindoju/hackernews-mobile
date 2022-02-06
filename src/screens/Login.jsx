@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Colors } from "../constants/Colors";
-import { Alert, Keyboard, StyleSheet, Text, Touchable } from "react-native";
+import { StyleSheet, Text } from "react-native";
 import { loginUserAsync } from "../redux/user/user.actions";
 import { Surface, TextInput, Button, HelperText } from "react-native-paper";
 
@@ -14,7 +14,7 @@ const Login = ({ navigation }) => {
 
   const dispatch = useDispatch();
 
-  const currentUser = useSelector((state) => state.user.currentUser);
+  const loginErrMsg = useSelector((state) => state.user.loginErrMsg);
 
   const reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
 
@@ -30,7 +30,8 @@ const Login = ({ navigation }) => {
           value={email}
           onChangeText={(email) => {
             setEmail(email);
-            setIsIncorrectDetails(false);
+
+            // setIsIncorrectDetails(false);
           }}
           mode="outlined"
           outlineColor={Colors.primary}
@@ -57,7 +58,7 @@ const Login = ({ navigation }) => {
           value={password}
           onChangeText={(email) => {
             setPassword(email);
-            setIsIncorrectDetails(false);
+            // setIsIncorrectDetails(false);
           }}
           mode="outlined"
           outlineColor={Colors.primary}
@@ -74,17 +75,13 @@ const Login = ({ navigation }) => {
           labelStyle={{ fontFamily: "lexendDeca" }}
           onPress={() => {
             dispatch(loginUserAsync(email, password));
-
-            !currentUser
-              ? setIsIncorrectDetails(true)
-              : setIsIncorrectDetails(false);
           }}
           disabled={emailInvalid || password.length <= 0}
         >
           Login
         </Button>
-        <HelperText type="error" visible={isIncorrectDetails}>
-          Incorrect login details
+        <HelperText type="error" visible={!loginErrMsg}>
+          Something went wrong!
         </HelperText>
       </Surface>
 

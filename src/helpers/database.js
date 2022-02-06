@@ -7,7 +7,6 @@ export const init = () => {
     db.transaction((tx) => {
       tx.executeSql(
         "create table if not exists users (name varchar(100), email text unique not null, password varchar(100) not null);",
-        // "DROP TABLE users;",
         [],
         () => {
           resolve();
@@ -29,9 +28,6 @@ export const registerUserIntoDatabase = (name, email, password) => {
         "insert into users (name, email, password) values (?, ?, ?);",
         [name, email, password],
         (_, result) => {
-          // if (!result.rows.length) {
-          //   reject("User not found");
-          // }
           resolve(result);
         },
         (_, err) => {
@@ -54,10 +50,9 @@ export const logUserIntoDatabase = (email, password) => {
         [email, password],
 
         (_, result) => {
-          // if (!result.rows.length) {
-          //   reject("User not found");
-          // }
-
+          if (!result.rows.length) {
+            reject("User not found");
+          }
           resolve(result);
         },
         (_, err) => {

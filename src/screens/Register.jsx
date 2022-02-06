@@ -11,6 +11,8 @@ const Register = ({ navigation }) => {
   const [password, setPassword] = useState("");
   const [isPasswordHidden, setIsPasswordHidden] = useState(true);
   const [isInvalidEmail, setIsInvalidEmail] = useState(false);
+  const [isInvalidName, setIsInvalidName] = useState(false);
+  const [isInvalidPassword, setIsInvalidPassword] = useState(false);
   const [isIncorrectDetails, setIsIncorrectDetails] = useState(false);
 
   const dispatch = useDispatch();
@@ -19,7 +21,7 @@ const Register = ({ navigation }) => {
 
   const emailInvalid = reg.test(email) === false || email.length <= 0;
 
-  const errMsg = useSelector((state) => state.user.errMsg);
+  const registerErrMsg = useSelector((state) => state.user.loginErrMsg);
 
   return (
     <Surface style={styles.container}>
@@ -31,14 +33,18 @@ const Register = ({ navigation }) => {
           value={name}
           onChangeText={(name) => {
             setName(name);
-            setIsIncorrectDetails(false);
+            // setIsIncorrectDetails(false);
+            setIsInvalidName(false);
           }}
           mode="outlined"
           outlineColor={Colors.primary}
           activeOutlineColor={Colors.primary}
+          onBlur={() => {
+            name.length <= 0 ? setIsInvalidName(true) : setIsInvalidName(false);
+          }}
         />
-        <HelperText type="info" visible={false}>
-          &nbsp;
+        <HelperText type="error" visible={isInvalidName}>
+          Name cannot be blank
         </HelperText>
 
         <TextInput
@@ -46,7 +52,7 @@ const Register = ({ navigation }) => {
           value={email}
           onChangeText={(email) => {
             setEmail(email);
-            setIsIncorrectDetails(false);
+            // setIsIncorrectDetails(false);
           }}
           mode="outlined"
           outlineColor={Colors.primary}
@@ -74,22 +80,26 @@ const Register = ({ navigation }) => {
           value={password}
           onChangeText={(email) => {
             setPassword(email);
-            setIsIncorrectDetails(false);
+            // setIsIncorrectDetails(false);
           }}
           mode="outlined"
           outlineColor={Colors.primary}
           activeOutlineColor={Colors.primary}
           secureTextEntry={isPasswordHidden ? true : false}
+          onBlur={() => {
+            name.length <= 0
+              ? setIsInvalidPassword(true)
+              : setIsInvalidPassword(false);
+          }}
         />
-        <HelperText type="info" visible={false}>
-          &nbsp;
+        <HelperText type="error" visible={isInvalidPassword}>
+          Password cannot be empty
         </HelperText>
 
         <Button
           mode="contained"
           onPress={() => {
             dispatch(registerUserAsync(name, email, password));
-            // errMsg === "" && dispatch(loginUserAsync(email, password));
           }}
           color={Colors.primary}
           labelStyle={{ fontFamily: "lexendDeca" }}
@@ -97,8 +107,8 @@ const Register = ({ navigation }) => {
         >
           Register
         </Button>
-        <HelperText type="error" visible={isIncorrectDetails}>
-          Incorrect register details
+        <HelperText type="error" visible={!registerErrMsg}>
+          Something went wrong!
         </HelperText>
       </Surface>
 

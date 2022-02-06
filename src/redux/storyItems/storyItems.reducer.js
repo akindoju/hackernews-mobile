@@ -1,3 +1,4 @@
+import { userTypes } from "../user/user.types";
 import { storyItemTypes } from "./storyItems.types";
 
 const initialState = {
