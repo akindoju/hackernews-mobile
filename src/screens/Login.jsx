@@ -2,14 +2,13 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Colors } from "../constants/Colors";
 import { StyleSheet, Text } from "react-native";
-import { loginUserAsync } from "../redux/user/user.actions";
+import { loginUserAsync, logout } from "../redux/user/user.actions";
 import { Surface, TextInput, Button, HelperText } from "react-native-paper";
 
 const Login = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isPasswordHidden, setIsPasswordHidden] = useState(true);
-  const [isIncorrectDetails, setIsIncorrectDetails] = useState(false);
   const [isInvalidEmail, setIsInvalidEmail] = useState(false);
 
   const dispatch = useDispatch();
@@ -30,8 +29,6 @@ const Login = ({ navigation }) => {
           value={email}
           onChangeText={(email) => {
             setEmail(email);
-
-            // setIsIncorrectDetails(false);
           }}
           mode="outlined"
           outlineColor={Colors.primary}
@@ -58,7 +55,6 @@ const Login = ({ navigation }) => {
           value={password}
           onChangeText={(email) => {
             setPassword(email);
-            // setIsIncorrectDetails(false);
           }}
           mode="outlined"
           outlineColor={Colors.primary}
@@ -66,7 +62,7 @@ const Login = ({ navigation }) => {
           secureTextEntry={isPasswordHidden ? true : false}
         />
         <HelperText type="info" visible={false}>
-          &nbsp;
+          Password is invalid!
         </HelperText>
 
         <Button
@@ -80,7 +76,7 @@ const Login = ({ navigation }) => {
         >
           Login
         </Button>
-        <HelperText type="error" visible={!loginErrMsg}>
+        <HelperText type="error" visible={loginErrMsg.length}>
           Something went wrong!
         </HelperText>
       </Surface>
@@ -89,7 +85,12 @@ const Login = ({ navigation }) => {
         Don't have an account?{" "}
         <Text
           style={styles.register}
-          onPress={() => navigation.navigate("Register")}
+          onPress={() => {
+            navigation.navigate("Register");
+            dispatch(logout());
+            setEmail("");
+            setPassword("");
+          }}
         >
           Register
         </Text>
@@ -114,8 +115,6 @@ const styles = StyleSheet.create({
 
   inputs: {
     justifyContent: "center",
-    // height: 400,
-    // height: 400,
   },
 
   text: {

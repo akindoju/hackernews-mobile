@@ -4,11 +4,10 @@ import { Surface } from "react-native-paper";
 import { Colors } from "../constants/Colors";
 import { saveStoryUrl } from "../redux/storyItems/storyItems.actions";
 import { View, Text, StyleSheet, TouchableNativeFeedback } from "react-native";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 
 const CardComponent = ({ receivedId, navigation }) => {
   const [receivedData, setReceivedData] = useState("");
-  const [displayedTime, setDisplayedTime] = useState("");
 
   useEffect(() => {
     axios
@@ -20,21 +19,6 @@ const CardComponent = ({ receivedId, navigation }) => {
       })
       .catch((err) => console.log(err));
   }, [receivedId]);
-
-  useEffect(() => {
-    const receivedTime = Math.floor(receivedData.time / 1000 / 60 / 60);
-
-    if (receivedTime > 1 && receivedTime < 24) {
-      setDisplayedTime(receivedTime);
-    } else if (receivedTime < 1) {
-      setDisplayedTime("Less than an hour ago");
-    } else if (receivedTime > 24) {
-      setDisplayedTime(() => {
-        const displayedTimeDay = Math.round(receivedTime / 24);
-        return `${displayedTimeDay} days ago`;
-      });
-    }
-  }, []);
 
   const dispatch = useDispatch();
 
@@ -48,7 +32,11 @@ const CardComponent = ({ receivedId, navigation }) => {
       <View>
         <Surface style={styles.surface}>
           <View style={styles.score}>
-            <Text style={styles.scoreText}>{receivedData.score}</Text>
+            <Text style={styles.scoreText}>
+              <Text>
+                {receivedData.score} <Text style={styles.subText}>vote(s)</Text>
+              </Text>
+            </Text>
           </View>
 
           <View style={styles.details}>
@@ -59,7 +47,7 @@ const CardComponent = ({ receivedId, navigation }) => {
               </Text>
               <Text style={styles.time}>
                 {" "}
-                {new Date(receivedData.time * 1000).toDateString()}
+                {new Date(receivedData.time * 1000).toLocaleString()}
               </Text>
             </View>
           </View>
@@ -99,6 +87,12 @@ const styles = StyleSheet.create({
     color: Colors.primary,
     fontFamily: "lexendDeca",
     fontSize: 20,
+    flexDirection: "row",
+    textAlign: "center",
+  },
+
+  subText: {
+    fontSize: 12,
   },
 
   title: {

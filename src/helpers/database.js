@@ -28,6 +28,9 @@ export const registerUserIntoDatabase = (name, email, password) => {
         "insert into users (name, email, password) values (?, ?, ?);",
         [name, email, password],
         (_, result) => {
+          if (!result.rows.length) {
+            reject(new Error());
+          }
           resolve(result);
         },
         (_, err) => {
@@ -51,7 +54,7 @@ export const logUserIntoDatabase = (email, password) => {
 
         (_, result) => {
           if (!result.rows.length) {
-            reject("User not found");
+            reject(new Error());
           }
           resolve(result);
         },

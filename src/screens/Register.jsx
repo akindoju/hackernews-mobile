@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Colors } from "../constants/Colors";
 import { StyleSheet, Text } from "react-native";
-import { registerUserAsync, loginUserAsync } from "../redux/user/user.actions";
+import { registerUserAsync, logout } from "../redux/user/user.actions";
 import { Surface, TextInput, Button, HelperText } from "react-native-paper";
 
 const Register = ({ navigation }) => {
@@ -13,7 +13,6 @@ const Register = ({ navigation }) => {
   const [isInvalidEmail, setIsInvalidEmail] = useState(false);
   const [isInvalidName, setIsInvalidName] = useState(false);
   const [isInvalidPassword, setIsInvalidPassword] = useState(false);
-  const [isIncorrectDetails, setIsIncorrectDetails] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -21,7 +20,7 @@ const Register = ({ navigation }) => {
 
   const emailInvalid = reg.test(email) === false || email.length <= 0;
 
-  const registerErrMsg = useSelector((state) => state.user.loginErrMsg);
+  const registerErrMsg = useSelector((state) => state.user.registerErrMsg);
 
   return (
     <Surface style={styles.container}>
@@ -33,7 +32,7 @@ const Register = ({ navigation }) => {
           value={name}
           onChangeText={(name) => {
             setName(name);
-            // setIsIncorrectDetails(false);
+
             setIsInvalidName(false);
           }}
           mode="outlined"
@@ -44,7 +43,7 @@ const Register = ({ navigation }) => {
           }}
         />
         <HelperText type="error" visible={isInvalidName}>
-          Name cannot be blank
+          Name is invalid!
         </HelperText>
 
         <TextInput
@@ -52,7 +51,6 @@ const Register = ({ navigation }) => {
           value={email}
           onChangeText={(email) => {
             setEmail(email);
-            // setIsIncorrectDetails(false);
           }}
           mode="outlined"
           outlineColor={Colors.primary}
@@ -80,7 +78,6 @@ const Register = ({ navigation }) => {
           value={password}
           onChangeText={(email) => {
             setPassword(email);
-            // setIsIncorrectDetails(false);
           }}
           mode="outlined"
           outlineColor={Colors.primary}
@@ -93,7 +90,7 @@ const Register = ({ navigation }) => {
           }}
         />
         <HelperText type="error" visible={isInvalidPassword}>
-          Password cannot be empty
+          Password is invalid!
         </HelperText>
 
         <Button
@@ -107,7 +104,7 @@ const Register = ({ navigation }) => {
         >
           Register
         </Button>
-        <HelperText type="error" visible={!registerErrMsg}>
+        <HelperText type="error" visible={registerErrMsg.length}>
           Something went wrong!
         </HelperText>
       </Surface>
@@ -116,7 +113,13 @@ const Register = ({ navigation }) => {
         Already have an account?{" "}
         <Text
           style={styles.register}
-          onPress={() => navigation.navigate("Login")}
+          onPress={() => {
+            navigation.navigate("Login");
+            dispatch(logout());
+            setName("");
+            setEmail("");
+            setPassword("");
+          }}
         >
           Login
         </Text>
