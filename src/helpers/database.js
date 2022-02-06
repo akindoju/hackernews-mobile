@@ -29,6 +29,9 @@ export const registerUserIntoDatabase = (name, email, password) => {
         "insert into users (name, email, password) values (?, ?, ?);",
         [name, email, password],
         (_, result) => {
+          // if (!result.rows.length) {
+          //   reject("User not found");
+          // }
           resolve(result);
         },
         (_, err) => {
@@ -46,14 +49,14 @@ export const logUserIntoDatabase = (email, password) => {
     db.transaction((tx) => {
       tx.executeSql(
         // "select * from users",
+        // [],
         "select * from users where email = ? and password = ?",
         [email, password],
-        // [],
 
         (_, result) => {
-          if (!result.rows.length) {
-            reject("User not found");
-          }
+          // if (!result.rows.length) {
+          //   reject("User not found");
+          // }
 
           resolve(result);
         },

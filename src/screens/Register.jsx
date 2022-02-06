@@ -89,7 +89,7 @@ const Register = ({ navigation }) => {
           mode="contained"
           onPress={() => {
             dispatch(registerUserAsync(name, email, password));
-            errMsg === "" && dispatch(loginUserAsync(email, password));
+            // errMsg === "" && dispatch(loginUserAsync(email, password));
           }}
           color={Colors.primary}
           labelStyle={{ fontFamily: "lexendDeca" }}

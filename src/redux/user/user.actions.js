@@ -1,7 +1,9 @@
+import { displayName } from "react-native/Libraries/Text/TextAncestor";
 import {
   logUserIntoDatabase,
   registerUserIntoDatabase,
 } from "../../helpers/database";
+import { clearStoriesState } from "../storyItems/storyItems.actions";
 import { userTypes } from "./user.types";
 
 const registerUserStart = () => ({
@@ -30,6 +32,10 @@ const loginUserSuccess = (currentUser) => ({
 const loginUserFail = (message) => ({
   type: userTypes.LOGIN_USER_FAIL,
   payload: message,
+});
+
+export const logout = () => ({
+  type: userTypes.LOGOUT,
 });
 
 export const registerUserAsync = (name, email, password) => {

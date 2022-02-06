@@ -46,6 +46,9 @@ export const storyItemsReducer = (state = initialState, action) => {
       return { ...state, storyUrl: action.payload };
     }
 
+    case storyItemTypes.LOGOUT:
+      return initialState;
+
     default:
       return state;
   }

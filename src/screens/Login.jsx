@@ -9,7 +9,7 @@ const Login = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isPasswordHidden, setIsPasswordHidden] = useState(true);
-  // const [isIncorrectDetails, setIsIncorrectDetails] = useState(false);
+  const [isIncorrectDetails, setIsIncorrectDetails] = useState(false);
   const [isInvalidEmail, setIsInvalidEmail] = useState(false);
 
   const dispatch = useDispatch();

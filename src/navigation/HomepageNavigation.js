@@ -1,9 +1,12 @@
 import About from "../screens/About";
 import Homepage from "../screens/Homepage";
 import { NavigationContainer } from "@react-navigation/native";
-import { createDrawerNavigator } from "@react-navigation/drawer";
+import { createDrawerNavigator, DrawerItem } from "@react-navigation/drawer";
 import { createStackNavigator } from "@react-navigation/stack";
 import WebViewScreen from "../screens/WebView";
+import { logout } from "../redux/user/user.actions";
+import { useDispatch } from "react-redux";
+import { Button } from "react-native";
 
 const Web = createStackNavigator();
 
@@ -23,9 +26,26 @@ const WebViewNavigator = () => {
 const Home = createDrawerNavigator();
 
 const HomepageNavigator = () => {
+  const dispatch = useDispatch();
+
   return (
     <NavigationContainer>
-      <Home.Navigator>
+      <Home.Navigator
+        screenOptions={{
+          drawerStyle: {
+            backgroundColor: "#c6cbef",
+            justifyContent: "center",
+          },
+        }}
+        drawerContent={() => (
+          <Button
+            title="Sign out"
+            onPress={() => {
+              dispatch(logout());
+            }}
+          />
+        )}
+      >
         <Home.Screen name="Homepage" component={WebViewNavigator} />
         <Home.Screen name="About" component={About} />
       </Home.Navigator>

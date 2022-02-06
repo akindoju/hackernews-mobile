@@ -39,5 +39,3 @@ export const fetchStoryItemsAsync = (page = 1) => {
     }
   };
 };
-
-saveStoryUrl();
