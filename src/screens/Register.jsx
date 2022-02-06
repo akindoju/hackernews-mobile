@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Colors } from "../constants/Colors";
 import { StyleSheet, Text } from "react-native";
-import { registerUserAsync } from "../redux/user/user.actions";
+import { registerUserAsync, loginUserAsync } from "../redux/user/user.actions";
 import { Surface, TextInput, Button, HelperText } from "react-native-paper";
 
 const Register = ({ navigation }) => {
@@ -18,6 +18,8 @@ const Register = ({ navigation }) => {
   const reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
 
   const emailInvalid = reg.test(email) === false || email.length <= 0;
+
+  const errMsg = useSelector((state) => state.user.errMsg);
 
   return (
     <Surface style={styles.container}>
@@ -87,6 +89,7 @@ const Register = ({ navigation }) => {
           mode="contained"
           onPress={() => {
             dispatch(registerUserAsync(name, email, password));
+            errMsg === "" && dispatch(loginUserAsync(email, password));
           }}
           color={Colors.primary}
           labelStyle={{ fontFamily: "lexendDeca" }}

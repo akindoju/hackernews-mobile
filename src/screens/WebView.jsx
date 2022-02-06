@@ -8,6 +8,7 @@ import {
 } from "react-native";
 import { WebView } from "react-native-webview";
 import { useSelector } from "react-redux";
+import { Colors } from "../constants/Colors";
 
 const WebViewScreen = (props) => {
   const [canGoBack, setCanGoBack] = useState(false);
@@ -72,16 +73,12 @@ const WebViewScreen = (props) => {
       />
       {loading && (
         <View style={styles.loading}>
-          <ActivityIndicator size="large" color="blue" />
+          <ActivityIndicator size="large" color={Colors.primary} />
         </View>
       )}
     </View>
   );
 };
-
-// WebView.navigationOptions = {
-//   title: "School fees",
-// };
 
 const styles = StyleSheet.create({
   loading: {

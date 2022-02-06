@@ -4,11 +4,11 @@
     "slug": "hackernews-mobile",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/hackerNewsLogo.png",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/hackerNewsSplash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#ff6600"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -19,8 +19,8 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#FFFFFF"
+        "foregroundImage": "./assets/hackerNewsLogo.png",
+        "backgroundColor": "#ff6600"
       }
     },
     "web": {

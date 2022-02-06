@@ -1,11 +1,12 @@
 import * as Font from "expo-font";
 import React, { useState } from "react";
 import { Provider } from "react-redux";
-import { store } from "./src/redux/store";
+import { store, persistor } from "./src/redux/store";
 import { StyleSheet } from "react-native";
 import AppLoading from "expo-app-loading";
 import { init } from "./src/helpers/database";
 import MainNavigator from "./src/navigation/MainNavigator";
+import { PersistGate } from "redux-persist/integration/react";
 
 init();
 
@@ -31,7 +32,9 @@ const App = () => {
 
   return (
     <Provider store={store}>
-      <MainNavigator />
+      <PersistGate persistor={persistor}>
+        <MainNavigator />
+      </PersistGate>
     </Provider>
   );
 };
