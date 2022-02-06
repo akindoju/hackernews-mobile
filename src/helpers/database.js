@@ -51,6 +51,10 @@ export const logUserIntoDatabase = (email, password) => {
         // [],
 
         (_, result) => {
+          if (!result.rows.length) {
+            reject("User not found");
+          }
+
           resolve(result);
         },
         (_, err) => {

@@ -1,16 +1,33 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Colors } from "../constants/Colors";
-import { StyleSheet, Text } from "react-native";
+import { Alert, Keyboard, StyleSheet, Text, Touchable } from "react-native";
 import { loginUserAsync } from "../redux/user/user.actions";
-import { Surface, TextInput, Button } from "react-native-paper";
+import {
+  Surface,
+  TextInput,
+  Button,
+  HelperText,
+  Portal,
+  Paragraph,
+  Dialog,
+} from "react-native-paper";
+import { View } from "react-native-web";
 
 const Login = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isPasswordHidden, setIsPasswordHidden] = useState(true);
+  const [isIncorrectDetails, setIsIncorrectDetails] = useState(false);
+  const [isInvalidEmail, setIsInvalidEmail] = useState(false);
 
   const dispatch = useDispatch();
+
+  const currentUser = useSelector((state) => state.user.currentUser);
+
+  const reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
+
+  const emailInvalid = reg.test(email) === false || email.length <= 0;
 
   return (
     <Surface style={styles.container}>
@@ -20,11 +37,21 @@ const Login = ({ navigation }) => {
         <TextInput
           label="Email"
           value={email}
-          onChangeText={(email) => setEmail(email)}
+          onChangeText={(email) => {
+            setEmail(email);
+            setIsIncorrectDetails(false);
+          }}
           mode="outlined"
           outlineColor={Colors.primary}
           activeOutlineColor={Colors.primary}
+          keyboardType="email-address"
+          onBlur={() => {
+            emailInvalid ? setIsInvalidEmail(true) : setIsInvalidEmail(false);
+          }}
         />
+        <HelperText type="error" visible={isInvalidEmail}>
+          Email address is invalid!
+        </HelperText>
 
         <TextInput
           right={
@@ -37,12 +64,18 @@ const Login = ({ navigation }) => {
           }
           label="Password"
           value={password}
-          onChangeText={(email) => setPassword(email)}
+          onChangeText={(email) => {
+            setPassword(email);
+            setIsIncorrectDetails(false);
+          }}
           mode="outlined"
           outlineColor={Colors.primary}
           activeOutlineColor={Colors.primary}
           secureTextEntry={isPasswordHidden ? true : false}
         />
+        <HelperText type="info" visible={false}>
+          &nbsp;
+        </HelperText>
 
         <Button
           mode="contained"
@@ -50,10 +83,20 @@ const Login = ({ navigation }) => {
           labelStyle={{ fontFamily: "lexendDeca" }}
           onPress={() => {
             dispatch(loginUserAsync(email, password));
+
+            if (!currentUser) {
+              setIsIncorrectDetails(true);
+            } else if (currentUser) {
+              setIsIncorrectDetails(false);
+            }
           }}
+          disabled={emailInvalid || password.length <= 0}
         >
           Login
         </Button>
+        <HelperText type="error" visible={isIncorrectDetails}>
+          Incorrect login details
+        </HelperText>
       </Surface>
 
       <Text style={styles.text}>
@@ -73,7 +116,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",
-
     padding: 20,
   },
 
@@ -85,8 +127,9 @@ const styles = StyleSheet.create({
   },
 
   inputs: {
-    justifyContent: "space-around",
-    height: 200,
+    justifyContent: "center",
+    // height: 400,
+    // height: 400,
   },
 
   text: {

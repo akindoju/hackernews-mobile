@@ -1,18 +1,20 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Colors } from "../constants/Colors";
 import { StyleSheet, Text } from "react-native";
 import { registerUserAsync } from "../redux/user/user.actions";
-import { Surface, TextInput, Button } from "react-native-paper";
-// import { registerUserIntoDatabase } from "../helpers/database";
+import { Surface, TextInput, Button, HelperText } from "react-native-paper";
 
 const Register = ({ navigation }) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isPasswordHidden, setIsPasswordHidden] = useState(true);
+  const [isInvalidEmail, setIsInvalidEmail] = useState(false);
 
   const dispatch = useDispatch();
+
+  const reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
 
   return (
     <Surface style={styles.container}>
@@ -35,6 +37,11 @@ const Register = ({ navigation }) => {
           mode="outlined"
           outlineColor={Colors.primary}
           activeOutlineColor={Colors.primary}
+          onBlur={() => {
+            reg.test(email) === false || email.length <= 0
+              ? setIsInvalidEmail(true)
+              : setIsInvalidEmail(false);
+          }}
         />
 
         <TextInput
@@ -54,16 +61,14 @@ const Register = ({ navigation }) => {
           activeOutlineColor={Colors.primary}
           secureTextEntry={isPasswordHidden ? true : false}
         />
+        <HelperText type="info" visible={false}>
+          &nbsp;
+        </HelperText>
 
         <Button
           mode="contained"
           onPress={() => {
             dispatch(registerUserAsync(name, email, password));
-            // const registeredData = dispatch(
-            //   registerUserIntoDatabase(name, email, password)
-            // );
-            // console.log(registeredData, "registeredUser");
-            // console.log("Clicked");
           }}
           color={Colors.primary}
           labelStyle={{ fontFamily: "lexendDeca" }}

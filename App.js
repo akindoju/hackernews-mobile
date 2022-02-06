@@ -5,8 +5,7 @@ import { store } from "./src/redux/store";
 import { StyleSheet } from "react-native";
 import AppLoading from "expo-app-loading";
 import { init } from "./src/helpers/database";
-import AuthNavigator from "./src/navigation/AuthNavigation";
-import HomepageNavigator from "./src/navigation/HomepageNavigation";
+import MainNavigator from "./src/navigation/MainNavigator";
 
 init();
 
@@ -17,7 +16,7 @@ const fetchFonts = () => {
   });
 };
 
-export default function App() {
+const App = () => {
   const [fontLoaded, setFontLoaded] = useState(false);
 
   if (!fontLoaded) {
@@ -32,11 +31,10 @@ export default function App() {
 
   return (
     <Provider store={store}>
-      <AuthNavigator />
-      {/* <HomepageNavigator /> */}
+      <MainNavigator />
     </Provider>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -45,3 +43,5 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
 });
+
+export default App;

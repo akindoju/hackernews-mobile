@@ -1,16 +1,12 @@
 import { userTypes } from "./user.types";
 
 const initialState = {
-  //   name: "",
-  //   email: "",
-  //   password: "",
-  currentUser: {},
+  currentUser: null,
   errMsg: "",
-  isLoggedIn: false,
 };
 
 export const userReducer = (state = initialState, action) => {
-  switch (action.typw) {
+  switch (action.type) {
     case userTypes.REGISTER_USER_START: {
       return {
         ...state,
@@ -20,8 +16,7 @@ export const userReducer = (state = initialState, action) => {
     case userTypes.REGISTER_USER_SUCCESS: {
       return {
         ...state,
-        currentUser: action.payload._array[0],
-        isLoggedIn: true,
+        currentUser: action.payload.rows._array[0],
       };
     }
 
@@ -36,8 +31,7 @@ export const userReducer = (state = initialState, action) => {
     case userTypes.LOGIN_USER_SUCCESS: {
       return {
         ...state,
-        currentUser: action.payload._array[0],
-        isLoggedIn: true,
+        currentUser: action.payload.rows._array[0],
       };
     }
 
