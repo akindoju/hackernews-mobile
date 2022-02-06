@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Colors } from "../constants/Colors";
 import { StyleSheet, Text } from "react-native";
 import { registerUserAsync } from "../redux/user/user.actions";
@@ -11,10 +11,13 @@ const Register = ({ navigation }) => {
   const [password, setPassword] = useState("");
   const [isPasswordHidden, setIsPasswordHidden] = useState(true);
   const [isInvalidEmail, setIsInvalidEmail] = useState(false);
+  const [isIncorrectDetails, setIsIncorrectDetails] = useState(false);
 
   const dispatch = useDispatch();
 
   const reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
+
+  const emailInvalid = reg.test(email) === false || email.length <= 0;
 
   return (
     <Surface style={styles.container}>
@@ -24,16 +27,25 @@ const Register = ({ navigation }) => {
         <TextInput
           label="Name"
           value={name}
-          onChangeText={(name) => setName(name)}
+          onChangeText={(name) => {
+            setName(name);
+            setIsIncorrectDetails(false);
+          }}
           mode="outlined"
           outlineColor={Colors.primary}
           activeOutlineColor={Colors.primary}
         />
+        <HelperText type="info" visible={false}>
+          &nbsp;
+        </HelperText>
 
         <TextInput
           label="Email"
           value={email}
-          onChangeText={(email) => setEmail(email)}
+          onChangeText={(email) => {
+            setEmail(email);
+            setIsIncorrectDetails(false);
+          }}
           mode="outlined"
           outlineColor={Colors.primary}
           activeOutlineColor={Colors.primary}
@@ -43,6 +55,9 @@ const Register = ({ navigation }) => {
               : setIsInvalidEmail(false);
           }}
         />
+        <HelperText type="error" visible={isInvalidEmail}>
+          Email address is invalid!
+        </HelperText>
 
         <TextInput
           right={
@@ -55,7 +70,10 @@ const Register = ({ navigation }) => {
           }
           label="Password"
           value={password}
-          onChangeText={(email) => setPassword(email)}
+          onChangeText={(email) => {
+            setPassword(email);
+            setIsIncorrectDetails(false);
+          }}
           mode="outlined"
           outlineColor={Colors.primary}
           activeOutlineColor={Colors.primary}
@@ -72,9 +90,13 @@ const Register = ({ navigation }) => {
           }}
           color={Colors.primary}
           labelStyle={{ fontFamily: "lexendDeca" }}
+          disabled={emailInvalid || password.length <= 0 || name.length <= 0}
         >
           Register
         </Button>
+        <HelperText type="error" visible={isIncorrectDetails}>
+          Incorrect register details
+        </HelperText>
       </Surface>
 
       <Text style={styles.text}>
@@ -107,7 +129,6 @@ const styles = StyleSheet.create({
 
   inputs: {
     justifyContent: "space-between",
-    height: 300,
   },
 
   text: {
