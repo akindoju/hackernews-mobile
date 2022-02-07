@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "hackernews-mobile",
-    "slug": "hackernews-mobile",
-    "version": "1.0.0",
+    "name": "Hacker Gist",
+    "slug": "hacker-gist",
+    "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./assets/hackerNewsLogo.png",
     "splash": {
@@ -18,10 +18,13 @@
       "supportsTablet": true
     },
     "android": {
+      "package": "com.akindoju.hacker_gist",
+      "versionCode": 2,
       "adaptiveIcon": {
         "foregroundImage": "./assets/hackerNewsLogo.png",
         "backgroundColor": "#ff6600"
-      }
+      },
+      "permissions": ["WRITE_EXTERNAL_STORAGE", "READ_EXTERNAL_STORAGE"]
     },
     "web": {
       "favicon": "./assets/favicon.png"
