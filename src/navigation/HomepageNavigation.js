@@ -44,7 +44,7 @@ const HomepageNavigator = () => {
           name="Home"
           component={WebViewNavigator}
           options={{
-            title: "Hacker News",
+            title: "Hacker Gist",
             drawerActiveBackgroundColor: "rgba(255, 102, 0,0.2)",
           }}
         />

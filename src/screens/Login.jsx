@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Colors } from "../constants/Colors";
-import { StyleSheet, Text } from "react-native";
+import { Dimensions, StyleSheet, Text, View } from "react-native";
 import { loginUserAsync, logout } from "../redux/user/user.actions";
 import { Surface, TextInput, Button, HelperText } from "react-native-paper";
 
@@ -96,6 +96,7 @@ const Login = ({ navigation }) => {
           Register
         </Text>
       </Text>
+      <Text style={styles.name}>Created by Olusola Akindoju</Text>
     </Surface>
   );
 };
@@ -126,6 +127,15 @@ const styles = StyleSheet.create({
 
   register: {
     color: Colors.primary,
+  },
+
+  name: {
+    position: "absolute",
+    bottom: 10,
+    left: Dimensions.get("window").width / 5,
+    fontFamily: "lexendDeca",
+    color: Colors.primary,
+    fontSize: 15,
   },
 });
 
