@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
   },
 
   subText: {
-    fontSize: 12,
+    fontSize: 10,
   },
 
   title: {

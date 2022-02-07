@@ -17,7 +17,7 @@ const Pagination = () => {
   return (
     <Surface style={styles.container}>
       <IconButton
-        icon="arrow-left"
+        icon="chevron-double-left"
         color={Colors.primary}
         size={30}
         onPress={() => {
@@ -25,19 +25,11 @@ const Pagination = () => {
         }}
         disabled={pageNumber <= 1}
       />
-      {/* <TextInput
-        value={text}
-        onChangeText={(text) => setText(text)}
-        mode="outlined"
-        activeOutlineColor={Colors.primary}
-        keyboardType="number-pad"
-        maxLength={3}
-      /> */}
 
       <Text style={styles.pageNumber}>{pageNumber}</Text>
 
       <IconButton
-        icon="arrow-right"
+        icon="chevron-double-right"
         color={Colors.primary}
         size={30}
         onPress={() => {
@@ -62,7 +54,7 @@ const styles = StyleSheet.create({
 
   pageNumber: {
     fontSize: 25,
-    fontFamily: "lexendDeca",
+    fontFamily: "lexendDecaBold",
   },
 });
 
