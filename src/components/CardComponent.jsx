@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import { Surface } from "react-native-paper";
 import { Colors } from "../constants/Colors";
@@ -9,6 +9,7 @@ import { View, Text, StyleSheet, TouchableNativeFeedback } from "react-native";
 
 const CardComponent = ({ receivedId, navigation }) => {
   const [receivedData, setReceivedData] = useState("");
+  const [isLoadingContent, setIsLoadingContent] = useState(true);
 
   useEffect(() => {
     axios
@@ -17,35 +18,34 @@ const CardComponent = ({ receivedId, navigation }) => {
       )
       .then(({ data }) => {
         setReceivedData(data);
+        setIsLoadingContent(false);
       })
-      .catch((err) => console.log(err));
-  }, [receivedId]);
+      .catch((err) => {
+        console.log(err);
+        setIsLoadingContent(false);
+      });
+  }, []);
 
   const dispatch = useDispatch();
 
-  const isLoadingStoryItems = useSelector(
-    (state) => state.storyItems.isLoadingStoryItems
-  );
-
   return (
-    <TouchableNativeFeedback
-      onPress={() => {
-        dispatch(saveStoryUrl(receivedData.url));
-        navigation.navigate("WebViewScreen");
+    <SkeletonContent
+      isLoading={isLoadingContent}
+      containerStyle={{
+        flex: 1,
+        width: 480,
+        paddingHorizontal: 5,
+        justifyContent: "center",
       }}
+      boneColor="#ddd"
+      animationDirection="horizontalLeft"
+      layout={[{ width: 350, height: 100 }]}
     >
-      <SkeletonContent
-        isLoading={isLoadingStoryItems}
-        containerStyle={{
-          flex: 1,
-          width: 480,
-          paddingHorizontal: 5,
-          marginVertical: "1%",
-          justifyContent: "center",
+      <TouchableNativeFeedback
+        onPress={() => {
+          dispatch(saveStoryUrl(receivedData.url));
+          navigation.navigate("WebViewScreen");
         }}
-        boneColor="#ddd"
-        animationDirection="horizontalLeft"
-        layout={[{ width: 350, height: 100 }]}
       >
         <View>
           <Surface style={styles.surface}>
@@ -74,8 +74,8 @@ const CardComponent = ({ receivedId, navigation }) => {
             </View>
           </Surface>
         </View>
-      </SkeletonContent>
-    </TouchableNativeFeedback>
+      </TouchableNativeFeedback>
+    </SkeletonContent>
   );
 };
 
