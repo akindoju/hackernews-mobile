@@ -22,6 +22,7 @@ const CardComponent = ({ receivedId, navigation }) => {
   }, [receivedId]);
 
   const dispatch = useDispatch();
+
   const isLoadingStoryItems = useSelector(
     (state) => state.storyItems.isLoadingStoryItems
   );
@@ -65,7 +66,9 @@ const CardComponent = ({ receivedId, navigation }) => {
                 </Text>
                 <Text style={styles.time}>
                   {" "}
-                  {new Date(receivedData.time * 1000).toLocaleString()}
+                  {receivedData.time
+                    ? new Date(receivedData.time * 1000).toDateString()
+                    : null}
                 </Text>
               </View>
             </View>
